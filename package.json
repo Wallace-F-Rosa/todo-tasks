@@ -7,11 +7,11 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
+    "build": "yarn nest build",
+    "format": "yarn prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "yarn nest start",
+    "start:dev": "yarn nest start --watch",
+    "start:debug": "yarn nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
@@ -22,15 +22,17 @@
   },
   "dependencies": {
     "@nestjs/cli": "^8.0.0",
-    "@nestjs/common": "^8.0.0",
-    "@nestjs/core": "^8.0.0",
+    "@nestjs/common": "^9.0.1",
+    "@nestjs/core": "^9.0.1",
     "@nestjs/mapped-types": "*",
+    "@nestjs/microservices": "^9.0.1",
     "@nestjs/platform-express": "^8.0.0",
     "@prisma/client": "^4.0.0",
     "prisma": "^4.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.5.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@nestjs/schematics": "^8.0.0",
