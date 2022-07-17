@@ -11,12 +11,15 @@ export class TaskService {
     return this.prisma.task.create({ data });
   }
 
-  async findAll() {
-    return `This action returns all task`;
+  async findAll(where: Prisma.TaskWhereInput) {
+    if (Object.keys(where).length > 0) {
+      return this.prisma.task.findMany({ where });
+    }
+    return this.prisma.task.findMany();
   }
 
   async findOne(id: string) {
-    return `This action returns a #${id} task`;
+    return this.prisma.task.findUniqueOrThrow({ where: { id } });
   }
 
   async update(id: string, data: Prisma.TaskUpdateInput) {
@@ -24,6 +27,6 @@ export class TaskService {
   }
 
   async remove(id: string) {
-    return `This action removes a #${id} task`;
+    return this.prisma.task.delete({ where: { id } });
   }
 }
