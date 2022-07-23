@@ -4,6 +4,7 @@ import { TaskController } from './task.controller';
 import { TaskService } from './task.service';
 import { v4 as uuid4 } from 'uuid';
 import { ConfigModule } from '@nestjs/config';
+import { Prisma } from '@prisma/client';
 
 describe('TaskController', () => {
   let controller: TaskController;
@@ -38,7 +39,5 @@ describe('TaskController', () => {
       const createdTask = await controller.create(task);
       expect(createdTask).toMatchObject(task);
     });
-
-    it('invalid task', async () => { });
   });
 });

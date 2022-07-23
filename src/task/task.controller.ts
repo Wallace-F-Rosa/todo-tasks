@@ -3,13 +3,14 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { TaskService } from './task.service';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Prisma } from '@prisma/client';
+import { CreateTaskDto } from './dto/create-task.dto';
 
 @Controller()
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
   @MessagePattern('createTask')
-  async create(@Payload() data: Prisma.TaskCreateInput) {
+  async create(@Payload() data: CreateTaskDto) {
     return this.taskService.create(data);
   }
 
