@@ -22,7 +22,7 @@ export class TaskService {
     return this.prisma.task.findUniqueOrThrow({ where: { id } });
   }
 
-  async update(id: string, data: Prisma.TaskUpdateInput) {
+  async update(id: string, data: UpdateTaskDto) {
     return this.prisma.task.update({ where: { id }, data });
   }
 
