@@ -9,7 +9,11 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     TaskModule,
     ConfigModule.forRoot({
-      envFilePath: [`.env.${process.env.NODE_ENV}`],
+      envFilePath: [
+        process.env.NODE_ENV === 'test'
+          ? `.env.${process.env.NODE_ENV}`
+          : '.env',
+      ],
     }),
   ],
   controllers: [AppController],

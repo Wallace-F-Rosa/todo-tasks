@@ -9,6 +9,13 @@ $ npm install
 
 ## Running the app
 
+### Create the env file
+
+- Copy the `.env.example` to `.env`
+- Set the `DATABASE_URL` to yout postgres access url
+
+### Run the app
+
 ```bash
 # development
 $ npm run start
