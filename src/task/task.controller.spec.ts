@@ -4,11 +4,9 @@ import { TaskController } from './task.controller';
 import { TaskService } from './task.service';
 import { v4 as uuid4 } from 'uuid';
 import { ConfigModule } from '@nestjs/config';
-import { Prisma } from '@prisma/client';
 
 describe('TaskController', () => {
   let controller: TaskController;
-  let prisma: PrismaService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -22,7 +20,6 @@ describe('TaskController', () => {
     }).compile();
 
     controller = module.get<TaskController>(TaskController);
-    prisma = module.get<PrismaService>(PrismaService);
   });
 
   it('should be defined', () => {

@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../prisma/prisma.service';
-import { Task } from './entities/task.entity';
 import { TaskService } from './task.service';
 import { v4 as uuid4 } from 'uuid';
 
