@@ -7,9 +7,9 @@ async function bootstrap() {
     AppModule,
     {
       transport: Transport.RMQ,
-      option: {
-        url: [process.env.CLOUDAMQP_URL],
-        queu: 'tasks_queue',
+      options: {
+        urls: [process.env.CLOUDAMQP_URL || 'amqp://localhost:5672'],
+        queue: 'task',
         queueOptions: {
           durable: false,
         },
