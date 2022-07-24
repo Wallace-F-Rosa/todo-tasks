@@ -12,7 +12,7 @@ $ npm install
 ### Create the env file
 
 - Copy the `.env.example` to `.env`
-- Set the `DATABASE_URL` to yout postgres access url
+- Set the `DATABASE_URL` to your postgres access url (if not installed installed use [docker](https://hub.docker.com/_/postgres))
 
 ### Run the app
 
@@ -28,6 +28,11 @@ $ npm run start:prod
 ```
 
 ## Test
+
+### Create the test env file
+
+- Copy the `.env.example` to `.env.test`
+- Set the `DATABASE_URL` to your postgres access url (if not installed installed use [docker](https://hub.docker.com/_/postgres)) 
 
 ```bash
 # unit tests
