@@ -14,7 +14,11 @@ $ npm install
 - Copy the `.env.example` to `.env`
 - Set the `DATABASE_URL` to your postgres access url (if not installed installed use [docker](https://hub.docker.com/_/postgres))
 
-### Run the app
+### Run the app locally
+
+- First run the migrations using `yarn migrate:dev`.
+
+- Then run the app:
 
 ```bash
 # development
@@ -33,6 +37,7 @@ $ npm run start:prod
 
 - Copy the `.env.example` to `.env.test`
 - Set the `DATABASE_URL` to your postgres access url (if not installed installed use [docker](https://hub.docker.com/_/postgres)) 
+- Run the migrations `yarn migrate:test`
 
 ```bash
 # unit tests
