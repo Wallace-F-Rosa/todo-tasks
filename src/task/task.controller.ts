@@ -7,6 +7,9 @@ import { CreateTaskDto } from './dto/create-task.dto';
 
 @Controller()
 export class TaskController {
+  /**
+   * Controller that manages tasks data from rabbitmq queue.
+   */
   constructor(private readonly taskService: TaskService) {}
 
   @MessagePattern('createTask')
