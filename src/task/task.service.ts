@@ -5,6 +5,10 @@ import { PrismaService } from '@/prisma/prisma.service';
 
 @Injectable()
 export class TaskService {
+  /**
+   * Service that deals with task data using Prisma.
+   */
+
   constructor(private prisma: PrismaService) {}
 
   async create(data: Prisma.TaskCreateInput): Promise<Task> {
