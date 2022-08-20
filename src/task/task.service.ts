@@ -33,4 +33,8 @@ export class TaskService {
   async remove(id: string) {
     return this.prisma.task.delete({ where: { id } });
   }
+
+  async removeUserTasks(userId: string) {
+    return this.prisma.task.deleteMany({ where: { userId } });
+  }
 }

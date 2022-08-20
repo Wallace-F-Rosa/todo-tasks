@@ -127,4 +127,8 @@ describe('TaskService', () => {
   beforeEach(async () => {
     await prisma.task.deleteMany({});
   });
+
+  afterAll(async () => {
+    await prisma.task.deleteMany({});
+  });
 });

@@ -28,6 +28,10 @@ describe('TaskController', () => {
     await prisma.task.deleteMany({});
   });
 
+  afterAll(async () => {
+    await prisma.task.deleteMany({});
+  });
+
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });

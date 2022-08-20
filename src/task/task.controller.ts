@@ -1,39 +1,42 @@
-import { Controller } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { TaskService } from './task.service';
-import { UpdateTaskDto } from './dto/update-task.dto';
-import { Prisma } from '@prisma/client';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 
-@Controller()
+@Controller('tasks')
 export class TaskController {
-  /**
-   * Controller that manages tasks data from rabbitmq queue.
-   */
   constructor(private readonly taskService: TaskService) {}
 
-  @MessagePattern('createTask')
-  async create(@Payload() data: CreateTaskDto) {
-    return this.taskService.create(data);
+  @Post()
+  create(@Body() createTaskDto: CreateTaskDto) {
+    return this.taskService.create(createTaskDto);
   }
 
-  @MessagePattern('findAllTask')
-  async findAll(@Payload() where: Prisma.TaskWhereInput) {
-    return this.taskService.findAll(where);
+  @Get()
+  findAll() {
+    return this.taskService.findAll({});
   }
 
-  @MessagePattern('findOneTask')
-  async findOne(@Payload() id: string) {
+  @Get(':id')
+  findOne(@Param('id') id: string) {
     return this.taskService.findOne(id);
   }
 
-  @MessagePattern('updateTask')
-  async update(@Payload() updateTaskDto: UpdateTaskDto) {
-    return this.taskService.update(updateTaskDto.id, updateTaskDto);
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+    return this.taskService.update(id, updateTaskDto);
   }
 
-  @MessagePattern('removeTask')
-  async remove(@Payload() id: string) {
+  @Delete(':id')
+  remove(@Param('id') id: string) {
     return this.taskService.remove(id);
   }
 }
