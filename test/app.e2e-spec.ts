@@ -11,8 +11,8 @@ describe('AppController (e2e)', () => {
   let taskController: TaskController;
 
   // userIds
-  const user1 = uuid4();
-  const user2 = uuid4();
+  const user1: string = uuid4();
+  const user2: string = uuid4();
 
   // task data
   const tasks = [
@@ -32,7 +32,8 @@ describe('AppController (e2e)', () => {
       userId: user2,
     },
   ];
-  beforeEach(async () => {
+
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
       providers: [PrismaService],
@@ -44,13 +45,18 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
+  afterEach(async () => {
+    await taskController.removeUserTasks(user1);
+    await taskController.removeUserTasks(user2);
+  });
+
   describe('todo', () => {
     describe('/tasks (POST)', () => {
       it('valid task', async () => {
         const task = {
           name: 'Test task',
           description: 'Test description',
-          userId: '3f7e42bf-604c-4bc2-82fd-a3d3c7111510',
+          userId: user1,
         };
         const res = await request(app.getHttpServer())
           .post('/tasks')
@@ -76,12 +82,13 @@ describe('AppController (e2e)', () => {
 
     describe('/tasks (GET)', () => {
       it('list tasks from user', async () => {
+        const createdTasks = [];
         for (const t of tasks) {
-          taskController.create(t);
+          createdTasks.push(await taskController.create(t));
         }
 
         const res = await request(app.getHttpServer()).get('/tasks');
-        console.log(res.body);
+        expect(res.body.length).toEqual(createdTasks.length);
       });
     });
   });

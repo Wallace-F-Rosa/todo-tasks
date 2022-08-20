@@ -18,7 +18,7 @@
     "test:watch": "NODE_ENV=test jest --watch",
     "test:cov": "NODE_ENV=test jest --coverage",
     "test:debug": "NODE_ENV=development node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json",
+    "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json --watch",
     "migrate:test": "dotenv -e .env.test -- yarn prisma migrate dev --name init",
     "migrate:dev": "dotenv -e .env -- yarn prisma migrate dev"
   },
