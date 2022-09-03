@@ -1,5 +1,5 @@
 # build app
-FROM node:lts as builder
+FROM node:lts-alpine as builder
 ENV NODE_ENV production
 WORKDIR /app
 COPY ["package.json", "yarn.lock", "./"]
