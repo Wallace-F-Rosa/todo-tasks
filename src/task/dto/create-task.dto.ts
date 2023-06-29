@@ -18,8 +18,4 @@ export class CreateTaskDto {
   @IsNotEmpty()
   @IsString()
   description: string;
-
-  @IsNotEmpty()
-  @IsUUID()
-  userId: string;
 }

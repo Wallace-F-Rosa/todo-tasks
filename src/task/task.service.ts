@@ -22,15 +22,17 @@ export class TaskService {
     return this.prisma.task.findMany();
   }
 
-  async findOne(id: string) {
-    return this.prisma.task.findUniqueOrThrow({ where: { id } });
+  async findOne(id: string, userId: string) {
+    return this.prisma.task.findFirstOrThrow({ where: { id, userId } });
   }
 
-  async update(id: string, data: UpdateTaskDto) {
+  async update(id: string, userId: string, data: UpdateTaskDto) {
+    this.findOne(id, userId);
     return this.prisma.task.update({ where: { id }, data });
   }
 
-  async remove(id: string) {
+  async remove(id: string, userId: string) {
+    this.findOne(id, userId);
     return this.prisma.task.delete({ where: { id } });
   }
 
