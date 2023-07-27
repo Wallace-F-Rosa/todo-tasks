@@ -3,11 +3,11 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   UseGuards,
   Request,
+  Put,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -31,12 +31,17 @@ export class TaskController {
   //   return this.taskService.findAll({ userId });
   // }
 
+  @Get()
+  findMany(@Request() req) {
+    return this.taskService.findAll({ userId: req.user.id });
+  }
+
   @Get(':id')
   findOne(@Request() req, @Param('id') id: string) {
     return this.taskService.findOne(id, req.user.id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(
     @Request() req,
     @Param('id') id: string,
