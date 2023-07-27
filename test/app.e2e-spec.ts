@@ -2,10 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
-import { v4 as uuid4 } from 'uuid';
 import { PrismaService } from '@/prisma/prisma.service';
 import { TaskService } from '@/task/task.service';
-import { create } from 'domain';
 import { faker } from '@faker-js/faker';
 import * as bcrypt from 'bcrypt';
 
@@ -126,13 +124,68 @@ describe('AppController (e2e)', () => {
 
     describe('/tasks (GET)', () => {
       it('list tasks from user', async () => {
-        // const createdTasks = [];
-        // for (const t of tasks) {
-        //   createdTasks.push(await taskService.create(t));
-        // }
-        // const res = await request(app.getHttpServer()).get('/tasks');
-        // expect(res.body.length).toEqual(createdTasks.length);
+        user1 = await createUserAndAssignId({
+          username: faker.internet.userName(),
+          password: faker.internet.password(),
+        });
+        const user1Token = await login({
+          username: user1.username,
+          password: user1.password,
+        });
+        user2 = await createUserAndAssignId({
+          username: faker.internet.userName(),
+          password: faker.internet.password(),
+        });
+        const user2Token = await login({
+          username: user1.username,
+          password: user1.password,
+        });
+        const createdTasks = [];
+        createdTasks.push(
+          await taskService.create({ ...tasks[0], userId: user1.id }),
+        );
+        createdTasks.push(
+          await taskService.create({ ...tasks[1], userId: user1.id }),
+        );
+        await taskService.create({ ...tasks[2], userId: user2.id });
+        const res = await request(app.getHttpServer())
+          .get('/tasks')
+          .set('Authorization', 'Bearer ' + user1Token)
+          .send();
+        expect(res.body.length).toEqual(createdTasks.length);
       });
+    });
+  });
+
+  describe('/tasks/:id (PUT)', () => {
+    it('update task', async () => {
+      user1 = await createUserAndAssignId({
+        username: faker.internet.userName(),
+        password: faker.internet.password(),
+      });
+      const user1Token = await login({
+        username: user1.username,
+        password: user1.password,
+      });
+      const createdTasks = [];
+      createdTasks.push(
+        await taskService.create({ ...tasks[0], userId: user1.id }),
+      );
+      createdTasks[0].description = 'Test update';
+      const res = await request(app.getHttpServer())
+        .put('/tasks/' + createdTasks[0].id)
+        .set('Authorization', 'Bearer ' + user1Token)
+        .send(createdTasks[0]);
+
+      const updatedTask = res.body;
+      expect(res.status).toEqual(200);
+      expect(updatedTask).toEqual(
+        expect.objectContaining({
+          id: updatedTask.id,
+          description: updatedTask.description,
+          userId: updatedTask.userId,
+        }),
+      );
     });
   });
 });
